@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+// Models relations:
+
+// this Conversation refers to room, where in a conversation there are two peoples talking to each others, i mean so many messages. So for each conversation there are many messages. This is a one-to-many relation from Conversation to Message
+
+// Now, when its come between Conversation and User, One user can have multiple Conversations with multiple other peoples. So from User's prpspective this is a one-to-many relationship. On other side this is a one-to-one conversation app. So, for each Conversation there will be to User envolved. So, from Conversation Model prospective this is a one-to-many relationship. finally it is a many-to-many relationship between Conversation and User model.
+
+// for User-Message relation ship, this is also a one-to-many relationship. Because one can send multiple message to multiple other users. and for one message there will be only one sender/user.
+
+
+model User {
+  id               String   @id @default(cuid())
+  username         String   @unique
+  fullName         String
+  password         String
+  gender           Gender
+  profilePic       String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  
+  conversationsIds String[]
+
+  conversations Conversation[]
+  messages      Message[]
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  participantIds String[]
+  participants   User[]
+  
+  messageIds String[]
+  messages   Message[]
+}
+
+model Message {
+  id String @id @default(cuid())
+
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  senderId String
+  sender   User   @relation(fields: [senderId], references: [id])
+
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Gender {
+  male
+  female
+}

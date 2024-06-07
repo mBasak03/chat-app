@@ -1,0 +1,7 @@
+{
+    "watch": ["backend/src"],
+    "ext": "ts,json",
+    "ignore": ["backend/src/**/*.spec.ts"],
+    "exec": "node --loader ts-node/esm --experimental-specifier-resolution=node backend/src/index.ts"
+  }
+  
