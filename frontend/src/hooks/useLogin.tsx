@@ -8,8 +8,8 @@ const useLogin= ()=>{
     const {setAuthUser}= useAuthContext()
     const login= async(username: string, password: string)=>{
         setLoading(true);
-        if(loading) toast.loading("logging in...")
         try{
+            
             const res= await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
