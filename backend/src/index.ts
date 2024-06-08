@@ -24,6 +24,6 @@ if(process.env.NODE_ENV!=="development"){
     })
 
 }
-server.listen(process.env.PORT, ()=>{
-    console.log("App is running at "+process.env.PORT+".....")
+server.listen(PORT, ()=>{
+    console.log("App is running at "+PORT+".....")
 })
