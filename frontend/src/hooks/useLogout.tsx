@@ -18,10 +18,9 @@ const useLogout = () => {
 			}
 
 			setAuthUser(null);
-			toast.success("You are logged out successfully")
 		} catch (error: any) {
 			console.error(error.message);
-			toast.error("Failed to logout");
+			toast.error(error.message);
 		} finally {
 			setLoading(false);
 		}

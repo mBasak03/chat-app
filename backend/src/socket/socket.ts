@@ -22,13 +22,14 @@ const io= new Server(server, {
 
 // doing socket functionality
 
-const userSocketMap:{[key: string]: string}={}
 
 // get recievers Id
+
 
 export const getRecieverSocketId= (recieverId: string)=>{
     return userSocketMap[recieverId];
 }
+const userSocketMap:{[key: string]: string}={}
 io.on("connection", (socket)=>{
     // when a new client is connected, save the client's id to userSocketMap as socket.Id
     const userId= socket.handshake.query.userId as string;
