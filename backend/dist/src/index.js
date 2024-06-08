@@ -4,14 +4,20 @@ import messageRoutes from "./routes/message.route.js";
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv";
 import { app, server } from "./socket/socket.js";
+import path from "path";
 dotenv.config();
-app.get("/", (req, res) => {
-    res.send("Welcome from serverhbhb");
-});
+const PORT = process.env.PORT || 5001;
+const __dirname = path.resolve();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+if (process.env.NODE_ENV !== "development") {
+    app.use(express.static(path.join(__dirname, "/frontend/dist")));
+    app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+    });
+}
 server.listen(process.env.PORT, () => {
     console.log("App is running at " + process.env.PORT + ".....");
 });
