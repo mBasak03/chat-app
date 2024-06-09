@@ -18,6 +18,6 @@ if (process.env.NODE_ENV !== "development") {
         res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
     });
 }
-server.listen(process.env.PORT, () => {
-    console.log("App is running at " + process.env.PORT + ".....");
+server.listen(PORT, () => {
+    console.log("App is running at " + PORT + ".....");
 });
